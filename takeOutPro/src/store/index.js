@@ -7,6 +7,8 @@ Vue.use(Vuex);
 const store =new Vuex.Store({
     state:{
         detail:"",
+        
+
     }
 })
 export default store;

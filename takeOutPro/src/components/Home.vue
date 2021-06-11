@@ -31,7 +31,7 @@
                 <van-cell icon="wap-nav" title="附近商家"/>
                 </van-cell-group>
 
-                <van-card v-for="dl in detail" :key="dl.id"  num="2" :thumb="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+dl.photo">
+                <van-card @click="Shops(dl.id)" v-for="dl in detail" :key="dl.id"  num="2" :thumb="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+dl.photo">
                
                 <template #title>
                     <van-row>
@@ -98,6 +98,9 @@ export default {
     methods:{
         serch(){
             this.$router.push('/serch')
+        },
+        Shops(id){
+            this.$router.push('/shops/'+id)
         }
     },
      created(){
@@ -107,31 +110,15 @@ export default {
               if(res.data){
                   app.homedata =res.data
               }
-            })
-     },
-      beforeRouteEnter(to,from,next){
-        next(function (vm) {
-            vm.$http.get('/biz/queryAllShopsInfo'         
-            ).then(function (res) {
+            }),
+            this.$http.get('/biz/queryAllShopsInfo').then(function (res) {
                 console.log(res.data)
                if(res.data){
-                vm.$store.state.detail=res.data;    
+                app.$store.state.detail=res.data;    
                }
-              })
-          })
-
-    },
-    beforeRouteUpdate(to,from,next){
-        var app = this
-          this.$http.get('/biz/queryAllShopsInfo'         
-            ).then(function (res) {
-                console.log(res)
-               if(res.data){
-                app.$store.state.detail=res.data;
-               }
-              })
-          next();
-    }
+                })
+     },
+     
     
 }
 </script>
