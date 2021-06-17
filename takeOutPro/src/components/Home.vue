@@ -6,10 +6,12 @@
         <van-icon @click="serch" name="search" color="#FFFFFF" size="22" />
         </template>
         <template #right>
-                 <a :href="'#/login'">登录</a>
-                 <p class="white">|</p>
-                 <a :href="'#/Register'">注册</a>
+                <van-row v-if="loingStatus"><a :href="'#/user'">{{name.account}}</a><span style="color:#FFFFFF">|</span><a @click="handleoff">注销</a></van-row>
+                
+                <van-row v-else ><a :href="'#/login'">登录</a><span style="color:#FFFFFF">|</span><a>注册</a></van-row> 
+                
         </template>
+        
         </van-nav-bar>
         </div>
 
@@ -31,11 +33,12 @@
                 <van-cell icon="wap-nav" title="附近商家"/>
                 </van-cell-group>
 
-                <van-card @click="Shops(dl.id)" v-for="dl in detail" :key="dl.id"  num="2" :thumb="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+dl.photo">
+                <van-card style="background: #FFFFFF" @click="Shops(dl.id)" v-for="dl in detail" :key="dl.id"  num="2" :thumb="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+dl.photo">
                
                 <template #title>
                     <van-row>
-                    <van-col span="16"><van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium">品牌</van-tag>
+                    <van-col span="16">
+                    <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium">品牌</van-tag>
                     <h2 style="display:inline-block;">{{dl.name}}</h2></van-col>
                     <van-col span="8">   
                     <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium">保</van-tag>
@@ -72,7 +75,7 @@
 
         <div>
         <van-tabbar route active-color="#008000">
-        <van-tabbar-item  replace to="/" icon="home-o">外卖</van-tabbar-item>
+        <van-tabbar-item  replace to="/home" icon="home-o">外卖</van-tabbar-item>
         <van-tabbar-item  replace to="/serch" icon="search">搜索</van-tabbar-item>
         <van-tabbar-item replace to="/order"  icon="shopping-cart-o">订单</van-tabbar-item>
         <van-tabbar-item replace to="/user"  icon="friends-o">我的</van-tabbar-item>
@@ -81,26 +84,31 @@
     </div>
 </template>
 <script>
-import {mapState} from "vuex"
+import {mapMutations, mapState} from "vuex"
 export default {
     name:"home",
     data(){
         return{
             active:0,
-            homedata:"",
+            homedata:"",//九宫格
             images: "",
             
         }
     },
     computed:{
-        ...mapState(['detail'])
+        ...mapState(['detail','loingStatus','name'])
     },
     methods:{
+        ...mapMutations(['mutationsLoginout']),
         serch(){
             this.$router.push('/serch')
         },
         Shops(id){
             this.$router.push('/shops/'+id)
+        },
+        handleoff(){
+            localStorage.clear()
+            this.mutationsLoginout()
         }
     },
      created(){
@@ -124,9 +132,6 @@ export default {
 </script>
 
 <style>
-.van-card{
-    background: #FFFFFF;
-}
 .van_tag{
     font-weight: 1000;
 }

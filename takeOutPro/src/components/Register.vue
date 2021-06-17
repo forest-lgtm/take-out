@@ -12,30 +12,26 @@
          <van-row type="flex"  justify="center">
             <van-tabs @disabled="disabled">
                 
-                  <van-tab disabled  title="登录" to="/login">  
-                           <van-field   format-trigger="onBlur" placeholder="用户名"/>
-                            <van-field type="password" format-trigger="onBlur" placeholder="密码">
-                                <template #extra>
-                                <van-switch v-model="checked" />
-                                </template>
-                            </van-field>                      
-                    <div style="margin: 16px;">
-                        <van-button round block type="primary" native-type="submit">登录</van-button>
-                    </div>
-                    </van-tab>
+                  <van-tab disabled  title="登录" to="/login"></van-tab>
               
 
               
                   <van-tab   title="注册" to="/register">
-                      <van-field   format-trigger="onBlur" placeholder="手机/邮箱/用户名"/>
-                            <van-field type="password"  format-trigger="onBlur" placeholder="密码">
-                                <template #extra>
-                                <van-switch v-model="checked" />
-                                </template>
-                            </van-field>     
-                        <van-field   format-trigger="onBlur" placeholder="请输入您的姓名"/>                 
+                      <van-field   format-trigger="onBlur"  v-model="username"  placeholder="手机/邮箱/用户名"/>
+                            <van-field
+                        v-model="password"
+                        :type="inputText"
+                        name="密码"
+                        placeholder="密码"
+                    >
+                        <template #right-icon>
+                        <van-switch v-model="checked" size="20" @change="registerInput"/>
+                        </template>
+
+                    </van-field>         
+                        <van-field   format-trigger="onBlur" v-model="name" placeholder="请输入您的姓名"/>                 
                     <div style="margin: 16px;">
-                        <van-button round block type="primary" native-type="submit">注册</van-button>
+                        <van-button round block type="primary" @click="handleRegister"  native-type="submit">注册</van-button>
                     </div>
                   </van-tab>
              
@@ -48,19 +44,52 @@
     </div>
 </template>
 <script>
+import {mapMutations} from "vuex"
 export default {
     name:"register",
     data(){
         return{
-            checked:false
+            fullname:"",
+            username:"",
+            password:"",
+            name:"",
+            checked:false,
+            inputText:"password",
         }
     },
     methods:{
+        ...mapMutations(['mutationsLogin']),
         handleicon(){
-            this.$router.push('/')
+            this.$router.push('/home')
         },
         disabled(){
             this.$router.push('/login')
+        },
+        registerInput(){
+          if (this.checked){   //注册页面的密码框的显示与隐藏
+            this.inputText='text';
+          }else{
+            this.inputText='password';
+          }
+        },
+        handleRegister(){      //注册
+          this.$http.post("/user/register",{
+            "account":this.fullname,
+              "password":this.password,
+              "name":this.username
+          }).then(function (res) {
+            console.log(res.data)
+            // if (res.data=="register success"){
+            //   alert("注册成功,前去登录")
+            //   history.go(0)
+            // };
+            // if (res.data=="register fail"){
+            //   alert("抱歉，注册失败")
+            // };
+            // if (res.data=="account is exit"){
+            //   alert("用户已存在")
+            // }
+          })
         }
     }
 }

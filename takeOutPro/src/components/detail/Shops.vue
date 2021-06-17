@@ -10,10 +10,10 @@
                   <br>
                     <van-image
                     cover
-                width="60"
-                height="60"
-                :src="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+shop.photo"
-                />
+                    width="60"
+                    height="60"
+                    :src="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+shop.photo"
+                    />
               </template>
          </van-nav-bar>
          <van-row style="margin-top:25px;text-align:center">
@@ -24,30 +24,32 @@
           <van-row style="text-align:center">
              <span style="color: #808080; font-size: 12px;">{{shop.score}}  月销售{{shop.sales}}单  联想教育   约五分钟   距离1000米</span>
         </van-row>
-         <van-row style="text-align:center">
-         <span style="border: 1px solid #ebedf0;">
-        <span><van-tag class="van_tag" color="#FFD700" text-color="#FFF" >首单</van-tag></span>
-        <span style="color: #808080; font-size: 12px;">新用户下单立减17元(不同其他    8个优惠   </span><van-icon name="arrow-down" />
-          </span>   
-        </van-row>
+        <discounts :discounts="id"></discounts>
         <van-row style="text-align:center">
             <van-tabs title-active-color="#00A67C" color="#00A67C">
             <van-tab title="点餐" name="orders">
                 <orders :order="id"></orders>
             </van-tab>
-            <van-tab title="评价" name="evaluate">内容 2</van-tab>
-            <van-tab title="商家" name="merchant">内容 3</van-tab>
+            <van-tab title="评价" name="evaluate">
+                <evaluate :evaluate="id" :evldata="shop"></evaluate>
+            </van-tab>
+            <van-tab title="商家" name="merchant">
+                <merchant :merchant="id"></merchant>
+            </van-tab>
             </van-tabs>
         </van-row>
 
-        
-        
         </div>
       
     </div>
 </template>
 <script>
 import Orders from "./Orders.vue"
+import Discounts from "./Discounts.vue"
+import Evaluate from "./Evaluate.vue"
+import Merchant from "./Merchant.vue"
+
+
 
 export default {
     name:"shops",
@@ -59,19 +61,35 @@ export default {
      },
      components:{
          Orders,
+         Discounts,
+         Merchant,
+         Evaluate
      },
     methods:{
-        handleicon(){
-             this.$router.push('/')
+         Shops(id){
+            this.$router.push('/shops/'+id)
         },
+        handleicon(){
+             this.$router.push('/home')
+        },
+        
     },
+
     created(){
          var app = this
          this.$http.get("/biz//queryInfoByShopId?shopId="+this.id).then(function (res) {
+             console.log(res)
              if(res.data){
                  app.shop = res.data
-             }
-    }
-         )}
+             }       
+    })
+    },
+         
 }
 </script>
+<style>
+.van-action-sheet__header{
+    font-weight: 600;
+    font-size: 22px;
+}
+</style>

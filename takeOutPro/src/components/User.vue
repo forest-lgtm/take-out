@@ -15,7 +15,8 @@
             />
         </van-col>
         <van-col span="16">
-            <p style="margin-bottom: 5px;font-size: 25px;font-weight: 200;color: #FFF;">张三</p>
+            <p v-if="loingStatus" style="margin-bottom: 5px;font-size: 25px;font-weight: 200;color: #FFF;">{{name.account}}</p>
+            <p v-else style="margin-bottom: 5px;font-size: 25px;font-weight: 200;color: #FFF;"><a :href="'#/login'">立即登录</a></p>
           <van-icon name="graphic" color="#FFF" size="20px" /><span style="color:#FFF">暂无绑定手机号</span>
         </van-col>
         <van-col span="2">
@@ -83,7 +84,7 @@
 
         <div>
         <van-tabbar route active-color="#008000">
-        <van-tabbar-item replace to="/" icon="home-o">外卖</van-tabbar-item>
+        <van-tabbar-item replace to="/home" icon="home-o">外卖</van-tabbar-item>
         <van-tabbar-item replace to="/serch" icon="search">搜索</van-tabbar-item>
         <van-tabbar-item replace to="/order"  icon="shopping-cart-o">订单</van-tabbar-item>
         <van-tabbar-item replace to="/user" icon="friends-o">我的</van-tabbar-item>
@@ -92,8 +93,12 @@
     </div>
 </template>
 <script>
+import { mapState} from "vuex"
 export default {
-    name:"user"
+    name:"user",
+    computed:{
+        ...mapState(['loingStatus','name'])
+    },
 }
 </script>
 

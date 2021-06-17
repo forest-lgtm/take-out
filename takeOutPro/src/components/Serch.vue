@@ -9,18 +9,21 @@
         </div>
       <div>
       <van-search
+        v-model="value"
+         @search="handles"
         show-action
         placeholder="请输入搜索关键词"
+        
         >
         <template #action>
-            <div style="background-color:#4fc08d;padding:0px 5px;color:#FFFFFF">搜索</div>
+            <div style="background-color:#4fc08d;padding:0px 5px;color:#FFFFFF"  @click="handles">搜索</div>
         </template>
         </van-search>
         </div>
 
          <div>
             <div class="main_detail">
-                <van-card v-for="dl in detail" :key="dl.id"  num="2" :thumb="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+dl.photo">
+                <van-card @click="Shops(dl.id)" v-for="dl in detail" :key="dl.id"  num="2" :thumb="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+dl.photo">
                
                 <template #title>
                     <van-row>
@@ -60,7 +63,7 @@
         </div>
         <div>
         <van-tabbar route active-color="#008000">
-        <van-tabbar-item replace to="/" icon="home-o">外卖</van-tabbar-item>
+        <van-tabbar-item replace to="/home" icon="home-o">外卖</van-tabbar-item>
         <van-tabbar-item replace to="/serch" icon="search">搜索</van-tabbar-item>
         <van-tabbar-item replace to="/order" icon="shopping-cart-o">订单</van-tabbar-item>
         <van-tabbar-item replace to="/user" icon="friends-o">我的</van-tabbar-item>
@@ -72,23 +75,32 @@
 import {mapState} from "vuex"
 export default {
     name:"serch",
+    data(){
+        return{
+            value:''
+        }
+    },
+    props:['name'],
     computed:{
         ...mapState(['detail'])
     },
-      beforeRouteEnter(to,from,next){
-        next(function (vm) {
-            vm.$http.get('/biz/queryAllShopsInfo'         
-            ).then(function (res) {
-                console.log(res.data)
-               if(res.data){
-                vm.$store.state.detail=res.data;    
+    methods:{
+        Shops(id){
+            this.$router.push('/shops/'+id)
+        },
+        handles(){      
+          var app = this
+          this.$http.get('/biz/queryAllShopsInfoByName?name='+this.value).then(function (res) {
+            console.log(res)
+            if(res.data){
+                app.$store.state.detail=res.data;
                }
               })
-          })
-
+        }
     },
-    beforeRouteUpdate(to,from,next){
-        var app = this
+  
+     created(){
+          var app = this
           this.$http.get('/biz/queryAllShopsInfo'         
             ).then(function (res) {
                 console.log(res)
@@ -96,8 +108,7 @@ export default {
                 app.$store.state.detail=res.data;
                }
               })
-          next();
-    }
+     }
     
 }
 </script>
