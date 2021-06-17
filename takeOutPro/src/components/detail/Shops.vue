@@ -38,7 +38,6 @@
             </van-tab>
             </van-tabs>
         </van-row>
-
         </div>
       
     </div>
@@ -63,7 +62,7 @@ export default {
          Orders,
          Discounts,
          Merchant,
-         Evaluate
+         Evaluate,
      },
     methods:{
          Shops(id){

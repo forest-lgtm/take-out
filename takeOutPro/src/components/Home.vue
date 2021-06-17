@@ -6,8 +6,7 @@
         <van-icon @click="serch" name="search" color="#FFFFFF" size="22" />
         </template>
         <template #right>
-                <van-row v-if="loingStatus"><a :href="'#/user'">{{name.account}}</a><span style="color:#FFFFFF">|</span><a @click="handleoff">注销</a></van-row>
-                
+                <van-row v-if="loingStatus"><a :href="'#/user'">{{name.account}}</a><span style="color:#FFFFFF">|</span><a @click="handleoff">注销</a></van-row>   
                 <van-row v-else ><a :href="'#/login'">登录</a><span style="color:#FFFFFF">|</span><a>注册</a></van-row> 
                 
         </template>
