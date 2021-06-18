@@ -17,7 +17,7 @@
 
               
                   <van-tab   title="注册" to="/register">
-                      <van-field   format-trigger="onBlur"  v-model="username"  placeholder="手机/邮箱/用户名"/>
+                      <van-field   format-trigger="onBlur"  v-model="fullname"  placeholder="手机/邮箱/用户名"/>
                             <van-field
                         v-model="password"
                         :type="inputText"
@@ -29,7 +29,7 @@
                         </template>
 
                     </van-field>         
-                        <van-field   format-trigger="onBlur" v-model="name" placeholder="请输入您的姓名"/>                 
+                        <van-field   format-trigger="onBlur" v-model="username" placeholder="请输入您的姓名"/>                 
                     <div style="margin: 16px;">
                         <van-button round block type="primary" @click="handleRegister"  native-type="submit">注册</van-button>
                     </div>
@@ -79,16 +79,16 @@ export default {
               "name":this.username
           }).then(function (res) {
             console.log(res.data)
-            // if (res.data=="register success"){
-            //   alert("注册成功,前去登录")
-            //   history.go(0)
-            // };
-            // if (res.data=="register fail"){
-            //   alert("抱歉，注册失败")
-            // };
-            // if (res.data=="account is exit"){
-            //   alert("用户已存在")
-            // }
+            if (res.data=="register success"){
+              alert("注册成功,前去登录")
+              history.go(0)
+            };
+            if (res.data=="register fail"){
+              alert("抱歉，注册失败")
+            };
+            if (res.data=="account is exit"){
+              alert("用户已存在")
+            }
           })
         }
     }

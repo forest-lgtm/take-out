@@ -102,7 +102,7 @@ export default {
 
       },
     methods:{
-        ...mapMutations(['mutationsMerchant','mutationsShopping','mutationsPush','mutationsplus','mutationsMinus2','mutationsMinus']),
+        ...mapMutations(['mutationsMerchant','mutationsShopping']),
         //通过shopid查询商家基本信息
         ordera(itemid,itemname){
             var app = this
@@ -267,5 +267,8 @@ export default {
 }
 .shopping .van-submit-bar__suffix-label{
     font-size: 12px;
+}
+.shopping .van-stepper__input{
+    color: #000000;
 }
 </style>

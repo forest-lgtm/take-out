@@ -51,7 +51,6 @@ export default {
     name:"login",
     data(){
         return{
-            fullname:"",
             username:"",
             password:"",
             checked:false,

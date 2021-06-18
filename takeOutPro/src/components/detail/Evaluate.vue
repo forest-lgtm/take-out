@@ -60,7 +60,7 @@
                     <van-image round width="2rem" height="2rem" src="https://img01.yzcdn.cn/vant/cat.jpeg"/>
                 </van-col>
                 <van-col span="13">
-                     <span style="font-size: 12px">{{item.account}}</span>
+                     <span style="font-size: 12px">{{item.account | filetrsaccount}}</span>
                       <div>
                         <van-rate v-model="item.score" readonly allow-half size="15"/>
                       </div>
@@ -95,7 +95,14 @@ export default {
            this.btnVal = res;
         }
     },
-    computed:{
+    filters:{
+            filetrsaccount(val){
+                 let reg = /^(.{1}).*(.{1})$/
+                  return val.replace(reg,"$1**********$2")           
+        
+        }
+     }, 
+    computed:{    
        filetrsData(){
             if(this.btnVal==1){
                 return this.remark.filter(function (val){
