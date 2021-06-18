@@ -15,19 +15,19 @@
         <van-col span="14" style="margin-top: 10px;" class="van-hairline--left">
             <van-row>
               <van-col span="12" style="margin-left:10px">
-                  <van-rate v-model="evldata.score" readonly allow-half />
+                  <van-rate v-model="evldata.score" readonly allow-half size="14" />
               </van-col>
               <van-col span="12" style="margin-left:-10px">
-                <h4 style="margin:0;display:inline;">服务评分</h4>
+                <h5 style="margin:0;display:inline;">服务评分</h5>
                 <span style="font-size:12px;color:orange">{{evldata.serviceScore}}</span>
               </van-col>  
             </van-row>
              <van-row style="margin-top:8px">
               <van-col span="12" style="margin-left:10px">
-                <van-rate v-model="evldata.score" readonly allow-half />
+                <van-rate v-model="evldata.score" readonly allow-half  size="14"/>
               </van-col>
               <van-col span="12" style="margin-left:-10px">
-                  <h4 style="margin:0;display:inline;">商品评分</h4>
+                  <h5 style="margin:0;display:inline;">商品评分</h5>
                   <span style="font-size:12px;color:orange">{{evldata.goodsScore}}</span>
               </van-col>  
             </van-row>
