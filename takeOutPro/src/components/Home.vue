@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-        <van-nav-bar title="正在定位..."   class="nav" >
+        <van-nav-bar :title="positionAddress ? positionAddress:'正在定位...'"   style="background-color: #00A67C">
         <template #left>
         <van-icon @click="serch" name="search" color="#FFFFFF" size="22" />
         </template>
@@ -40,22 +40,22 @@
                     <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium">品牌</van-tag>
                     <h2 style="display:inline-block;">{{dl.name}}</h2></van-col>
                     <van-col span="8">   
-                    <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium">保</van-tag>
-                    <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium">准</van-tag>
-                    <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium">票</van-tag>
+                    <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium" style="padding: 2px 5px;">保</van-tag>
+                    <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium" style="padding: 2px 5px;">准</van-tag>
+                    <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium" style="padding: 2px 5px;">票</van-tag>
                     </van-col>
                     </van-row>
                 </template>
                 
                 <template #desc>
                     <van-row>
-                    <van-col span="18">
-                        <van-rate v-model="dl.score" readonly allow-half />
+                    <van-col span="19">
+                        <van-rate size="14" v-model="dl.score" readonly allow-half />
                         <span>{{dl.score}}</span>
                         <span style="color:orange">月销量{{dl.sales}}单</span>
                     </van-col>
-                    <van-col span="6">
-                          <van-tag class="van_tag" style="margin-left:10px"  plain type="waring" text-color="orange" size="medium">联想教育</van-tag>
+                    <van-col span="5">
+                          <van-tag class="van_tag" plain type="waring" text-color="orange" size="medium" style="padding: 2px 0px;">联想教育</van-tag>
                     </van-col>   
                     </van-row>
                  </template>
@@ -80,6 +80,18 @@
         <van-tabbar-item replace to="/user"  icon="friends-o">我的</van-tabbar-item>
         </van-tabbar>
         </div>
+
+
+        <div class="amap-page-container">
+      <el-amap vid="amap" :plugin="plugin" class="amap-demo" :center="center">
+      </el-amap>
+      <div class="toolbar">
+        <!-- <span v-if="loaded">
+          location: lng = {{ lng }} lat = {{ lat }}
+        </span>
+        <span v-else>正在定位</span> -->
+      </div>
+    </div>
     </div>
 </template>
 <script>
@@ -87,10 +99,44 @@ import {mapMutations, mapState} from "vuex"
 export default {
     name:"home",
     data(){
+        let self = this;
         return{
             active:0,
             homedata:"",//九宫格
             images: "",
+             center: [121.59996, 31.197646],
+      lng: 0,
+      lat: 0,
+      loaded: false,
+      plugin: [
+        {
+          pName: "Geolocation",
+          events: {
+            init(o) {
+              // o 是高德地图定位插件实例
+              o.getCurrentPosition((status, result) => {
+                console.log(result);
+                // console.log(result.addressComponent.township);
+                if (result && result.position) {
+                  var len = result.addressComponent.township.length;
+                  var index = result.formattedAddress.indexOf(
+                    result.addressComponent.township
+                  );
+                  self.positionAddress = result.formattedAddress.substring(
+                    index + len
+                  );
+                  // self.lng = result.position.lng;
+                  // self.lat = result.position.lat;
+                  // self.center = [self.lng, self.lat];
+                  self.loaded = true;
+                  self.$nextTick();
+                }
+              });
+            },
+          },
+        },
+      ],
+    positionAddress:""
             
         }
     },
@@ -137,9 +183,7 @@ export default {
  a {
     color: #FFFFFF;
 }
-.nav{
-    background-color: #00A67C;
-}
+
 .white{
     color: #FFFFFF;
 }

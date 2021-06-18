@@ -24,28 +24,27 @@
          <div>
             <div class="main_detail">
                 <van-card @click="Shops(dl.id)" v-for="dl in detail" :key="dl.id"  num="2" :thumb="'http://47.95.13.193:80/takeOutSystem-1.0-SNAPSHOT/'+dl.photo">
-               
                 <template #title>
                     <van-row>
                     <van-col span="16"><van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium">品牌</van-tag>
                     <h2 style="display:inline-block;">{{dl.name}}</h2></van-col>
                     <van-col span="8">   
-                    <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium">保</van-tag>
-                    <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium">准</van-tag>
-                    <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium">票</van-tag>
+                    <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium" style="padding: 2px 5px;">保</van-tag>
+                    <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium" style="padding: 2px 5px;">准</van-tag>
+                    <van-tag class="van_tag" color="#F8D959" text-color="#000" size="medium" style="padding: 2px 5px;">票</van-tag>
                     </van-col>
                     </van-row>
                 </template>
                 
                 <template #desc>
                     <van-row>
-                    <van-col span="18">
-                        <van-rate v-model="dl.score" readonly allow-half />
+                    <van-col span="19">
+                        <van-rate size="14" v-model="dl.score" readonly allow-half />
                         <span>{{dl.score}}</span>
                         <span style="color:orange">月销量{{dl.sales}}单</span>
                     </van-col>
-                    <van-col span="6">
-                          <van-tag class="van_tag" style="margin-left:10px"  plain type="waring" text-color="orange" size="medium">联想教育</van-tag>
+                    <van-col span="5">
+                          <van-tag class="van_tag" plain type="waring" text-color="orange" size="medium" style="padding: 2px 0px;">联想教育</van-tag>
                     </van-col>   
                     </van-row>
                  </template>

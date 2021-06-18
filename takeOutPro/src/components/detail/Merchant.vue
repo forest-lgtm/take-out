@@ -37,9 +37,9 @@
         </span>
         </van-row>
         <van-row style="margin-top:-10px">
-                <span van-col="8"><van-image width="8rem" height="5rem" fit="contain" src="https://img01.yzcdn.cn/vant/cat.jpeg"/></span>
-                <span van-col="8"><van-image width="8rem" height="5rem" fit="contain" src="https://img01.yzcdn.cn/vant/cat.jpeg"/></span>
-                <span van-col="8"><van-image width="8rem" height="5rem" fit="contain" src="https://img01.yzcdn.cn/vant/cat.jpeg"/></span>
+                <span van-col="8"><van-image width="6rem" height="5rem" fit="contain" src="https://img01.yzcdn.cn/vant/cat.jpeg"/></span>
+                <span van-col="8"><van-image width="6rem" height="5rem" fit="contain" src="https://img01.yzcdn.cn/vant/cat.jpeg"/></span>
+                <span van-col="8"><van-image width="6rem" height="5rem" fit="contain" src="https://img01.yzcdn.cn/vant/cat.jpeg"/></span>
             <div class="van-hairline--top" style="margin:5px 0"></div>
         </van-row>   
           
